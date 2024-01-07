@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "rtml-core"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
 authors = ["DeadMeme <deadunderscorememe@gmail.com>"]
 readme = "README.md"
+packages = [{include = "rtml_core"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
