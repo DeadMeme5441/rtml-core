@@ -16,10 +16,10 @@ class Document:
         self.opening_tags()
         self.closing_tags()
 
+        self.error_check()
+
         for tag in self.tags:
             tag.enclosing_pairs()
-
-        self.error_check()
 
         self.total_tags = len(self.tags)
         self.total_errors = len(self.closing_errors) + len(self.opening_errors)
@@ -72,9 +72,11 @@ class Document:
                 # print(
                 #     f"Error: {tag.name} tag is not closed properly., opened at {[str(x) for x in tag.start_positions]}"
                 # )
+                self.tags.remove(tag)
                 self.closing_errors.append(tag)
             elif len(tag.start_positions) < len(tag.end_positions):
                 # print(
                 #     f"Error: {tag.name} tag is not opened properly., closed at {[str(x) for x in tag.end_positions]}"
                 # )
+                self.tags.remove(tag)
                 self.opening_errors.append(tag)
