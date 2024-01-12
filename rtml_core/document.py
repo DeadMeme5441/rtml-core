@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import re
 
@@ -40,6 +41,7 @@ class Document:
         for match in re.finditer("<[^/].*?>", self.data):
             start_position = match.end()
             tag = match.group().strip("<>").strip(";").strip()
+            print(tag)
             if tag not in [t.name for t in self.tags]:
                 self.tags.append(Tag(tag, start_position))
             else:

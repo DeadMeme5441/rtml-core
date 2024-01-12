@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Tag:
     def __init__(self, name, start_position=None):
         self.name = name
