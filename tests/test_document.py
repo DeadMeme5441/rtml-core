@@ -18,3 +18,7 @@ class TestDocument:
     def test_error_check(self):
         doc = Document("files/ramayana.txt")
         assert doc.total_errors != 0
+
+    def test_dict(self):
+        doc = Document("files/perfect_file.txt")
+        print(doc.__dict__())

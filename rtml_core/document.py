@@ -39,7 +39,7 @@ class Document:
     def opening_tags(self):
         for match in re.finditer("<[^/].*?>", self.data):
             start_position = match.end()
-            cleaned = match.group().strip("<>").strip(";").split(";")
+            cleaned = match.group().strip("<>").strip(";")
             cleaned = [x.strip() for x in cleaned]
             for tag in cleaned:
                 if tag not in [t.name for t in self.tags]:
@@ -54,7 +54,7 @@ class Document:
     def closing_tags(self):
         for match in re.finditer("</.*?>", self.data):
             end_position = match.start()
-            cleaned = match.group().strip("</>").split(";")
+            cleaned = match.group().strip("</>").strip(";")
             cleaned = [x.strip() for x in cleaned]
             tag_names = [tag.name for tag in self.tags]
 
