@@ -39,32 +39,28 @@ class Document:
     def opening_tags(self):
         for match in re.finditer("<[^/].*?>", self.data):
             start_position = match.end()
-            cleaned = match.group().strip("<>").strip(";")
-            cleaned = [x.strip() for x in cleaned]
-            for tag in cleaned:
-                if tag not in [t.name for t in self.tags]:
-                    self.tags.append(Tag(tag, start_position))
-                else:
-                    for t in self.tags:
-                        if t.name == tag:
-                            t.add_start_position(start_position)
+            tag = match.group().strip("<>").strip(";").strip()
+            if tag not in [t.name for t in self.tags]:
+                self.tags.append(Tag(tag, start_position))
+            else:
+                for t in self.tags:
+                    if t.name == tag:
+                        t.add_start_position(start_position)
 
         return self.tags
 
     def closing_tags(self):
         for match in re.finditer("</.*?>", self.data):
             end_position = match.start()
-            cleaned = match.group().strip("</>").strip(";")
-            cleaned = [x.strip() for x in cleaned]
+            tag = match.group().strip("</>").strip(";").strip()
             tag_names = [tag.name for tag in self.tags]
 
-            for tag in cleaned:
-                if tag not in tag_names:
-                    self.tags.append(Tag(tag))
+            if tag not in tag_names:
+                self.tags.append(Tag(tag))
 
-                for t in self.tags:
-                    if t.name == tag:
-                        t.add_end_position(end_position)
+            for t in self.tags:
+                if t.name == tag:
+                    t.add_end_position(end_position)
 
     def error_check(self):
         for tag in self.tags:
