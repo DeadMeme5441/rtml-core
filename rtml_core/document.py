@@ -9,7 +9,7 @@ class Document:
     def __init__(self, path):
         self.path = path
         self.name = os.path.basename(path)
-        self.data = open(path).read()
+        self.data = open(path, encoding="utf-8").read()
         self.tags = []
         self.closing_errors = []
         self.opening_errors = []
@@ -40,7 +40,7 @@ class Document:
     def opening_tags(self):
         for match in re.finditer("<[^/].*?>", self.data):
             start_position = match.end()
-            tag = match.group().strip("<>").strip(";").strip().encode(encoding="UTF-8")
+            tag = match.group().strip("<>").strip(";").strip()
             if tag not in [t.name for t in self.tags]:
                 self.tags.append(Tag(tag, start_position))
             else:
@@ -53,7 +53,7 @@ class Document:
     def closing_tags(self):
         for match in re.finditer("</.*?>", self.data):
             end_position = match.start()
-            tag = match.group().strip("</>").strip(";").strip().encode(encoding="UTF-8")
+            tag = match.group().strip("</>").strip(";").strip()
             tag_names = [tag.name for tag in self.tags]
 
             if tag not in tag_names:
