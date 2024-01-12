@@ -40,8 +40,7 @@ class Document:
     def opening_tags(self):
         for match in re.finditer("<[^/].*?>", self.data):
             start_position = match.end()
-            tag = match.group().strip("<>").strip(";").strip()
-            print(tag)
+            tag = match.group().strip("<>").strip(";").strip().encode(encoding="UTF-8")
             if tag not in [t.name for t in self.tags]:
                 self.tags.append(Tag(tag, start_position))
             else:
@@ -54,7 +53,7 @@ class Document:
     def closing_tags(self):
         for match in re.finditer("</.*?>", self.data):
             end_position = match.start()
-            tag = match.group().strip("</>").strip(";").strip()
+            tag = match.group().strip("</>").strip(";").strip().encode(encoding="UTF-8")
             tag_names = [tag.name for tag in self.tags]
 
             if tag not in tag_names:
